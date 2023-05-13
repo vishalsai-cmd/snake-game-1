@@ -7,7 +7,7 @@ Body{
     display:flex;
 }
 #game{
-    background-color:black;
+    background-color:green;
     width:60vw;
     height:80vh;
     display:grid;
@@ -15,10 +15,10 @@ Body{
     grid-template-columns: repeat(40,1fr);
 }
 .snake{
-    background-color: green;
+    background-color: white;
     border:0.1vmin solid white;
 }
 .food{
-    background-color:blue;
+    background-color:yellow;
     border:0.1vmin solid white;
 }

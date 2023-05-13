@@ -1,4 +1,4 @@
-import {onSnake,expandsnake} from './snake.js';
+/*  import {onSnake,expandsnake} from './snake.js';
 let food = {x:10,y:0};
 const expansionrate=1;
 export function update(){
@@ -17,4 +17,4 @@ export function draw(gameboard){
         gameboard.appendChild(foodElement);
     
 
-}
+} */
