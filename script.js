@@ -227,3 +227,4 @@ left.addEventListener("click",() =>{
 function snakeintersection(){
     return onSnake(snakebody[0]),{ignoreHead:true};
 }
+//final line
