@@ -1,14 +1,14 @@
 Body{
     background-color:white;
-    height:100vh;
-    width:100vw;
+    height:95vh;
+    width:90vw;
     justify-content: center;
     align-items:center;
     display:flex;
 }
 #game{
     background-color:green;
-    width:60vw;
+    width: 60vw;
     height:80vh;
     display:grid;
     grid-template-rows: repeat(40,1fr);
@@ -21,4 +21,71 @@ Body{
 .food{
     background-color:yellow;
     border:0.1vmin solid white;
+}
+.food1{
+    background-color:blue;
+    border:0.1vmin solid white;
+}
+.food2{
+    background-color:red;
+    border:0.1vmin solid white;
+}
+.flex-col{
+    display:flex;
+    flex-direction: column;
+}
+.nav-bar{
+    justify-content:space-between;
+    width: 60vw;
+    background-color: black;
+    color:white;
+    height:6vh;
+}
+.score{
+    font-size:2rem;
+
+}
+.flex-row{
+    display:flex;
+    flex-direction:row;
+}
+.high-score{
+    justify-content:space-around;
+    font-size:2rem;
+
+}
+#countdown{
+    font-size:2rem;
+    margin-right:20vw;
+}
+.up{
+    border-radius: 1.5rem;
+    height:4vh;
+    background-color:brown;
+}
+.down{
+    border-radius: 1.5rem;
+    height:4vh;
+    background-color:brown;
+    margin-left:20rem;
+
+}
+.right{
+    border-radius: 1.5rem;
+    height:4vh;
+    background-color:brown;
+    margin-left:20rem;
+}
+.left{
+    border-radius: 1.5rem;
+    height:4vh;
+    background-color:brown;
+    margin-left:18vw;
+}
+.top-nav{
+    background-color: brown;
+    width:60vw;
+}
+.colors{
+    font-size:2rem;
 }
