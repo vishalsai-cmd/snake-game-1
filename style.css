@@ -1,15 +1,15 @@
 Body{
     background-color:white;
     height:95vh;
-    width:90vw;
+    width:95vw;
     justify-content: center;
     align-items:center;
     display:flex;
 }
 #game{
     background-color:green;
-    width: 60vw;
-    height:80vh;
+    width:50rem;
+    height:50rem;
     display:grid;
     grid-template-rows: repeat(40,1fr);
     grid-template-columns: repeat(40,1fr);
@@ -36,7 +36,7 @@ Body{
 }
 .nav-bar{
     justify-content:space-between;
-    width: 60vw;
+    width:50rem;
     background-color: black;
     color:white;
     height:6vh;
@@ -61,31 +61,45 @@ Body{
 .up{
     border-radius: 1.5rem;
     height:4vh;
-    background-color:brown;
 }
 .down{
     border-radius: 1.5rem;
     height:4vh;
-    background-color:brown;
-    margin-left:20rem;
 
 }
 .right{
     border-radius: 1.5rem;
     height:4vh;
-    background-color:brown;
-    margin-left:20rem;
 }
 .left{
     border-radius: 1.5rem;
     height:4vh;
-    background-color:brown;
-    margin-left:18vw;
 }
 .top-nav{
     background-color: brown;
-    width:60vw;
+    width:50rem;
 }
 .colors{
     font-size:2rem;
 }
+.up > img{
+    height:2vh;
+    width:2vw;
+}
+.down > img{
+    height:2vh;
+    width:2vw;
+}
+.right > img{
+    height:2vh;
+    width:2vw;
+}
+.left > img{
+    height:2vh;
+    width:2vh;
+}
+@media screen {
+    body{
+        background-color: white;
+    }
+} 

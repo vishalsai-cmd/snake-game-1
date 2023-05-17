@@ -5,24 +5,32 @@ import { outsidegrid } from "./grid.js";
 const buttons=document.querySelector(".buttons");
 let lastRendertime=0;
 let gameOver=false;
-const snakespeed=5;
+const snakespeed=15;
 let inputDirection={x:0,y:0};
 let lastinputDirection={x:0,y:0};
+/* let snakex=5,snakey=5; */
+/* let foodx,foody; */
 const scoreElement=document.querySelector(".score");
 const highscoreElement=document.querySelector(".high-score");
+let highscore=localStorage.getItem("high-score") || 0;
+highscoreElement.innerText=`High score:${highscore}`;
+let container=document.querySelector(".container");
+let color=["red","green","blue"];
+const foodsound=new Audio("Snake.mp3");
 let score=0;
-const snakebody=[
+let snakebody=[
     {x:10,y:11},
     {x:11,y:11},
     {x:12,y:11}
 
 
-];
-const food=[
+]; 
+/* let snakebody=[]; */
+let food=[
     {a:10,b:20},
     {a:5,b:10},
-    {a:15,b:25}
-]
+    {a:15,b:25} 
+] 
 const gameboard=document.getElementById("game");
 function main(currentTime){
     if(gameOver){
@@ -36,18 +44,19 @@ function main(currentTime){
      if (secondsSinceLastRender < 1/snakespeed) return 
     
     
-    lastRendertime=currentTime;
+    lastRendertime=currentTime
 
     update();
     draw(); 
 } 
-window.requestAnimationFrame(main)
+let animation=window.requestAnimationFrame(main)
 
  function update(){
     updatesnake();
     /* updateFood(); */
     checkDeath();
     /* updatefoodposition(); */
+    /* initgame(); */
 
 }
 function draw(){
@@ -62,7 +71,7 @@ function checkDeath(){
 }
 const countdown=document.getElementById("countdown");
 let setcountdown=setInterval(updatecountdown,1000);
-let stratingtime=1;
+let stratingtime=3;
 let time=stratingtime*60;
 function updatecountdown(){
     const minutes=Math.floor(time/60);
@@ -95,7 +104,7 @@ function drawfood(gameboard)
     gameboard.appendChild(foodelement);
     gameboard.appendChild(foodelement1);
     gameboard.appendChild(foodelement2);
-}
+} 
 const updatefoodposition = () =>{
     food[0].a=Math.floor(Math.random()*40);
     food[0].b=Math.floor(Math.random()*40);
@@ -107,32 +116,54 @@ const updatefoodposition = () =>{
 
 }
 const initgame = () =>{
-    if(snakebody[0].x === food[0].a  &&  snakebody[0].y === food[0].b){
-        updatefoodposition();
-        snakebody.push([food[0].a,food[0].b]);
-        score++;
+    if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
+        updatefoodposition()
+        snakebody.push([food[0].a,food[0].b])   
+        score++
         scoreElement.innerText =`score:${score}`
-        console.log("vishal");
-        return;
-    }
-    if(snakebody[0].x === food[1].a  &&  snakebody[0].y === food[1].b){
-        updatefoodposition();
-        snakebody.push([food[1].a,food[1].b]);
-        score++;
-        scoreElement.innerText =`score:${score}`
-        console.log("vishal");
-        return;
-    }
-    if(snakebody[0].x === food[2].a  &&  snakebody[0].y === food[2].b){
-        updatefoodposition();
-        snakebody.push([food[2].a,food[2].b]);
-        score++;
-        scoreElement.innerText =`score:${score}`
-        console.log("vishal");
+        foodsound.play();
+        highscore = score >= highscore ? score: highscore;
+        localStorage.setItem("high-score",highscore);
+        highscoreElement.innerText=`High score:${highscore}`;
+        snakespeed=snakespeed+2;
+        /* document.colors[0].style.color=colors[0]; */
         return;
     }
 
+    if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+        updatefoodposition();
+        snakebody.push([food[1].a,food[1].b]);
+        score++;
+        scoreElement.innerText =`score:${score}`;
+        snakespeed=snakespeed+2;
+        return;
+    }
+    if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
+        updatefoodposition();
+        snakebody.push([food[2].a,food[2].b]);
+        score++;
+        scoreElement.innerText =`score:${score}`;
+        snakespeed=snakespeed+2;
+        return;
+    }
+    /* for(let i=0;i<snakebody.length;i++)
+    {
+        if(i!==0 && snakebody[0][1] === snakebody[i][1] && snakebody[0][0] === snakebody[i][0])
+        {
+            alert("gameover");
+        }
+         
+    } */
+
+
 }
+/* console.log(snakebody[0].x);
+console.log(snakebody[0].y );
+console.log(food[2].a);
+console.log(food[2].b); */
+
+/* snakebody[0]=[snakex,snakey];
+console.log(snakebody[0]); */
 /* if(snakebody[0].x === food[0].a  &&  snakebody[0].y === food[0].b){
     updatefoodposition();
     snakebody.push([food[0].a,food[0].b]);
@@ -142,9 +173,16 @@ function updatesnake(){
     const inputDirection=getinputDirection();
     for(let i=snakebody.length-2;i>=0;i--){
         snakebody[i+1]={...snakebody[i]}
-    }
+    } 
+    /* for (let i = snakebody.length - 1; i > 0; i--) {
+        snakebody[i] = snakebody[i - 1];
+    } */
     snakebody[0].x+=inputDirection.x;
     snakebody[0].y+=inputDirection.y; 
+    /* snakex+=inputDirection.x;
+    snakey+=inputDirection.y; */
+    initgame();
+    /* snakeintersection(); */
 
 }
 function drawsnake(gameboard){
@@ -157,15 +195,20 @@ function drawsnake(gameboard){
     })
     
 
-}
+} 
+/* function drawsnake(gameboard){
+    const snakeElement=document.createElement('div');
+    snakeElement.style.gridRowStart=foody;
+    snakeElement.style.gridColumnStart=foodx;
+    snakeElement.classList.add("snake");
+    gameboard.appendChild(snakeElement);
+} */
 function getsnakehead(){
     return snakebody[0]
 }
 updatefoodposition();
-let setIntervalId;
-setIntervalId=setInterval(initgame,100);
-let highscore=localStorage.getItem("high-score");
-highscoreElement.innerText = `high score : ${highscore}`;
+/* let setIntervalId;
+setIntervalId=setInterval(initgame,100); */
 window.addEventListener("keydown", e=>{
     switch(e.key){
         case 'ArrowUp':
@@ -187,6 +230,13 @@ window.addEventListener("keydown", e=>{
 
     }
 
+})
+window.addEventListener("keydown",e=>{
+    if(e.key == " ")
+    {
+        window.cancelAnimationFrame(animation);
+        console.log("vishal");
+    }
 })
 function getinputDirection(){
     lastinputDirection=inputDirection;
@@ -224,7 +274,14 @@ right.addEventListener("click",() =>{
 left.addEventListener("click",() =>{
     inputDirection = {x:-1,y:0}
 })
-function snakeintersection(){
-    return onSnake(snakebody[0]),{ignoreHead:true};
-}
+/* function snakeintersection(){
+    for(let i=0;i<snakebody.length;i++)
+    {
+        if(i!==0 && snakebody[0].x === snakebody[i].x && snakebody[0].y === snakebody[i].y)
+        {
+            alert("gameover");
+        }
+         
+    }
+} */
 //final line
