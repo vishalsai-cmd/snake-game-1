@@ -5,7 +5,7 @@ import { outsidegrid } from "./grid.js";
 const buttons=document.querySelector(".buttons");
 let lastRendertime=0;
 let gameOver=false;
-const snakespeed=15;
+let snakespeed=5;
 let inputDirection={x:0,y:0};
 let lastinputDirection={x:0,y:0};
 /* let snakex=5,snakey=5; */
@@ -14,9 +14,19 @@ const scoreElement=document.querySelector(".score");
 const highscoreElement=document.querySelector(".high-score");
 let highscore=localStorage.getItem("high-score") || 0;
 highscoreElement.innerText=`High score:${highscore}`;
+var foodsound=new Audio("snake.mp3");
 let container=document.querySelector(".container");
-let color=["red","green","blue"];
-const foodsound=new Audio("Snake.mp3");
+/* let seq1=document.querySelector(".seq1");
+let seq2=document.querySelector(".seq2");
+let seq3=document.querySelector(".seq3");
+let color1=["red","yellow","blue"];
+let color2=["yellow","blue","red"];
+let color3=["blue","red","yellow"];
+let number=Math.floor(Math.random()*3);
+let sequence1=seq1.innerHTML=color1[number];
+let sequence2=seq2.innerHTML=color2[number];
+let sequence3=seq3.innerHTML=color3[number]; */
+
 let score=0;
 let snakebody=[
     {x:10,y:11},
@@ -39,7 +49,7 @@ function main(currentTime){
         return;
         
     }
-    window.requestAnimationFrame(main);
+    animation1 = window.requestAnimationFrame(main);
      const secondsSinceLastRender=(currentTime-lastRendertime)/1000
      if (secondsSinceLastRender < 1/snakespeed) return 
     
@@ -49,7 +59,7 @@ function main(currentTime){
     update();
     draw(); 
 } 
-let animation=window.requestAnimationFrame(main)
+let animation1=window.requestAnimationFrame(main)
 
  function update(){
     updatesnake();
@@ -58,7 +68,7 @@ let animation=window.requestAnimationFrame(main)
     /* updatefoodposition(); */
     /* initgame(); */
 
-}
+} 
 function draw(){
     gameboard.innerHTML='';
     drawsnake(gameboard);
@@ -87,6 +97,23 @@ function updatecountdown(){
     }
 
 }
+const foodelement=document.createElement("div");
+const foodelement1=document.createElement("div");
+const foodelement2=document.createElement("div");
+foodelement.style.gridRowStart=food[0].a;
+foodelement.style.gridColumnStart=food[0].b;
+foodelement1.style.gridRowStart=food[1].a;
+foodelement1.style.gridColumnStart=food[1].b;
+foodelement2.style.gridRowStart=food[2].a;
+foodelement2.style.gridColumnStart=food[2].b;
+foodelement.classList.add("food");
+foodelement1.classList.add("food1");
+foodelement2.classList.add("food2");
+let x1=gameboard.appendChild(foodelement);
+let x2=gameboard.appendChild(foodelement1);
+let x3=gameboard.appendChild(foodelement2);
+let foodarray=[x1,x2,x3];
+
 function drawfood(gameboard)
 {
     const foodelement=document.createElement("div");
@@ -105,47 +132,158 @@ function drawfood(gameboard)
     gameboard.appendChild(foodelement1);
     gameboard.appendChild(foodelement2);
 } 
+
+let foodtrack=1;
 const updatefoodposition = () =>{
     food[0].a=Math.floor(Math.random()*40);
     food[0].b=Math.floor(Math.random()*40);
-    food[1].a=Math.floor(Math.random()*40);
-    food[1].b=Math.floor(Math.random()*40);
-    food[2].a=Math.floor(Math.random()*40);
-    food[2].b=Math.floor(Math.random()*40);
-    console.log("vijay");
 
 }
-const initgame = () =>{
+const updatefoodpositionone = () =>{
+    food[1].a=Math.floor(Math.random()*40);
+    food[1].b=Math.floor(Math.random()*40);
+
+}
+const updatefoodpositiontwo = () =>{
+    food[2].a=Math.floor(Math.random()*40);
+    food[2].b=Math.floor(Math.random()*40);
+
+}
+//const initgame = () =>{
+
+
+//    for(let i=0;i<3;i++){
+
+//console.log(i);
+//        if(snakebody[0].x===food[i].a && snakebody[0].y==food[i].b)
+//        {
+//        console.log(food[i].a);
+    
+//    if(snakebody[0].x === food[foodtrack].b &&  snakebody[0].y=== food[foodtrack].a){
+//        updatefoodposition()
+//        snakebody.push([food[0].a,food[0].b])   
+//        score++;
+//        foodtrack++;
+//        scoreElement.innerText =`score:${score}`
+        /* foodsound.play(); */
+//        highscore = score >= highscore ? score: highscore;
+//        localStorage.setItem("high-score",highscore);
+//        highscoreElement.innerText=`High score:${highscore}`;
+//        snakespeed++;
+//        foodarray.shift();
+//        return;
+//    }
+//    else{
+//        alert("You lost");
+//    }
+    
+//}
+
+//} 
+
+//}
+
+    // if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+    //     /* updatefoodpositionone(); */
+    //     snakebody.push([food[1].a,food[1].b]);
+    //     score++;
+    //     scoreElement.innerText =`score:${score}`;
+    //     snakespeed++;
+    //     return;
+    // }
+    // if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
+    //     updatefoodpositiontwo();
+    //     snakebody.push([food[2].a,food[2].b]);
+    //     score++;
+    //     scoreElement.innerText =`score:${score}`;
+    //     snakespeed++;
+    //     /* foodarray.pop(); */
+    //     return; 
+    // }
+
+
+ const initgame = () =>{
+     if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
+         updatefoodposition()
+         snakebody.push([food[0].a,food[0].b])   
+         score++;
+         scoreElement.innerText =`score:${score}`
+         /* foodsound.play(); */
+         highscore = score >= highscore ? score: highscore;
+         localStorage.setItem("high-score",highscore);
+         highscoreElement.innerText=`High score:${highscore}`;
+         snakespeed++;
+        /*  foodarray.shift(); */
+         
+         if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+            updatefoodpositionone();
+            snakebody.push([food[1].a,food[1].b]);
+            score++;
+            scoreElement.innerText =`score:${score}`;
+            snakespeed++;
+            console.log("vishal");
+            if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
+            updatefoodpositiontwo();
+            snakebody.push([food[2].a,food[2].b]);
+            score++;
+            scoreElement.innerText =`score:${score}`;
+            snakespeed++;
+         /* foodarray.pop(); */
+     }
+}
+      /* if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
+          updatefoodpositiontwo();
+          snakebody.push([food[2].a,food[2].b]);
+          score++;
+          scoreElement.innerText =`score:${score}`;
+          snakespeed++;
+       /* foodarray.pop(); */
+   //} */
+}
+
+/*      if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+          updatefoodpositionone();
+          snakebody.push([food[1].a,food[1].b]);
+          score++;
+          scoreElement.innerText =`score:${score}`;
+          snakespeed++;
+         return;
+     }
+     if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
+         updatefoodpositiontwo();
+         snakebody.push([food[2].a,food[2].b]);
+         score++;
+         scoreElement.innerText =`score:${score}`;
+         snakespeed++;
+         /* foodarray.pop(); */
+         //return; 
+     //}
+ } 
+    //trying to make things in sequence
+/* const initgame = () =>{
     if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
         updatefoodposition()
         snakebody.push([food[0].a,food[0].b])   
-        score++
+        score++;
         scoreElement.innerText =`score:${score}`
         foodsound.play();
         highscore = score >= highscore ? score: highscore;
         localStorage.setItem("high-score",highscore);
         highscoreElement.innerText=`High score:${highscore}`;
         snakespeed=snakespeed+2;
-        /* document.colors[0].style.color=colors[0]; */
-        return;
-    }
 
+}
+const redfood = () =>{
     if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
         updatefoodposition();
         snakebody.push([food[1].a,food[1].b]);
         score++;
         scoreElement.innerText =`score:${score}`;
         snakespeed=snakespeed+2;
-        return;
     }
-    if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
-        updatefoodposition();
-        snakebody.push([food[2].a,food[2].b]);
-        score++;
-        scoreElement.innerText =`score:${score}`;
-        snakespeed=snakespeed+2;
-        return;
-    }
+
+    
+}  */
     /* for(let i=0;i<snakebody.length;i++)
     {
         if(i!==0 && snakebody[0][1] === snakebody[i][1] && snakebody[0][0] === snakebody[i][0])
@@ -156,7 +294,7 @@ const initgame = () =>{
     } */
 
 
-}
+
 /* console.log(snakebody[0].x);
 console.log(snakebody[0].y );
 console.log(food[2].a);
@@ -183,6 +321,7 @@ function updatesnake(){
     snakey+=inputDirection.y; */
     initgame();
     /* snakeintersection(); */
+   
 
 }
 function drawsnake(gameboard){
@@ -234,7 +373,7 @@ window.addEventListener("keydown", e=>{
 window.addEventListener("keydown",e=>{
     if(e.key == " ")
     {
-        window.cancelAnimationFrame(animation);
+        window.cancelAnimationFrame(animation1);
         console.log("vishal");
     }
 })
@@ -274,7 +413,7 @@ right.addEventListener("click",() =>{
 left.addEventListener("click",() =>{
     inputDirection = {x:-1,y:0}
 })
-/* function snakeintersection(){
+function snakeintersection(){
     for(let i=0;i<snakebody.length;i++)
     {
         if(i!==0 && snakebody[0].x === snakebody[i].x && snakebody[0].y === snakebody[i].y)
@@ -283,5 +422,5 @@ left.addEventListener("click",() =>{
         }
          
     }
-} */
+}
 //final line
