@@ -1,8 +1,10 @@
+var farr=[];     
 /* import {update as updatesnake,draw as drawsnake,snakespeed,getsnakehead,snakeintersection} from "./snake.js"; */
 /* import {update as updateFood,draw as drawFood} from "./food.js"; */
 import { outsidegrid } from "./grid.js";
 /* import {getinputDirection} from "./input.js"; */
 const buttons=document.querySelector(".buttons");
+var sequencearr = ['blue','red','yellow']
 let lastRendertime=0;
 let gameOver=false;
 let snakespeed=5;
@@ -74,6 +76,7 @@ function draw(){
     drawsnake(gameboard);
     /* drawFood(gameboard); */
     drawfood(gameboard);
+    console.log('inside draw')
 
 }
 function checkDeath(){
@@ -95,7 +98,7 @@ function updatecountdown(){
         alert("game over.press ok to restart");
         location.reload();
     }
-
+    
 }
 const foodelement=document.createElement("div");
 const foodelement1=document.createElement("div");
@@ -109,45 +112,50 @@ foodelement2.style.gridColumnStart=food[2].b;
 foodelement.classList.add("food");
 foodelement1.classList.add("food1");
 foodelement2.classList.add("food2");
-let x1=gameboard.appendChild(foodelement);
-let x2=gameboard.appendChild(foodelement1);
-let x3=gameboard.appendChild(foodelement2);
-let foodarray=[x1,x2,x3];
 
-function drawfood(gameboard)
-{
-    const foodelement=document.createElement("div");
-    const foodelement1=document.createElement("div");
-    const foodelement2=document.createElement("div");
-    foodelement.style.gridRowStart=food[0].a;
-    foodelement.style.gridColumnStart=food[0].b;
-    foodelement1.style.gridRowStart=food[1].a;
-    foodelement1.style.gridColumnStart=food[1].b;
-    foodelement2.style.gridRowStart=food[2].a;
-    foodelement2.style.gridColumnStart=food[2].b;
-    foodelement.classList.add("food");
-    foodelement1.classList.add("food1");
-    foodelement2.classList.add("food2");
-    gameboard.appendChild(foodelement);
-    gameboard.appendChild(foodelement1);
-    gameboard.appendChild(foodelement2);
+function drawfood(gameboard){
+    for (let j=0;j<farr.length;j++){
+        const foodelement=document.createElement("div");
+        foodelement.style.gridRowStart=farr[j][0];
+        foodelement.style.gridColumnStart=farr[j][1];
+        foodelement.style.backgroundColor = sequencearr[j]
+        gameboard.appendChild(foodelement);
+        console.log("inside drawfood")
+    }
+    // const foodelement1=document.createElement("div");
+    // const foodelement2=document.createElement("div");
+    // foodelement1.style.gridRowStart=food[1].a;
+    // foodelement1.style.gridColumnStart=food[1].b;
+    // foodelement2.style.gridRowStart=food[2].a;
+    // foodelement2.style.gridColumnStart=food[2].b;
+    // foodelement1.classList.add("food1");
+    // foodelement2.classList.add("food2");
+    // gameboard.appendChild(foodelement1);
+    // gameboard.appendChild(foodelement2);
 } 
 
-let foodtrack=1;
-const updatefoodposition = () =>{
-    food[0].a=Math.floor(Math.random()*40);
-    food[0].b=Math.floor(Math.random()*40);
+// let foodtrack=1;
+// const updatefoodposition = () =>{
+//     food[0].a=Math.floor(Math.random()*40);
+//     food[0].b=Math.floor(Math.random()*40);
 
-}
-const updatefoodpositionone = () =>{
-    food[1].a=Math.floor(Math.random()*40);
-    food[1].b=Math.floor(Math.random()*40);
+// }
+// const updatefoodpositionone = () =>{
+//     food[1].a=Math.floor(Math.random()*40);
+//     food[1].b=Math.floor(Math.random()*40);
 
-}
-const updatefoodpositiontwo = () =>{
-    food[2].a=Math.floor(Math.random()*40);
-    food[2].b=Math.floor(Math.random()*40);
+// }
+// const updatefoodpositiontwo = () =>{
+//     food[2].a=Math.floor(Math.random()*40);
+//     food[2].b=Math.floor(Math.random()*40);
 
+// }
+function createfood(){
+    for (let i=0;i<3;i++){
+    fX = Math.floor(Math.random()*40);
+    fY = Math.floor(Math.random()*40);
+    farr.push([fX,fY])
+    }
 }
 //const initgame = () =>{
 
@@ -200,45 +208,42 @@ const updatefoodpositiontwo = () =>{
     //     /* foodarray.pop(); */
     //     return; 
     // }
+/* colorsequence=["yellow","blue","red"]; */
 
 
  const initgame = () =>{
      if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
-         updatefoodposition()
+        //  updatefoodposition()
          snakebody.push([food[0].a,food[0].b])   
          score++;
+         farr.shift()
          scoreElement.innerText =`score:${score}`
          /* foodsound.play(); */
          highscore = score >= highscore ? score: highscore;
          localStorage.setItem("high-score",highscore);
          highscoreElement.innerText=`High score:${highscore}`;
          snakespeed++;
+         /* farr.shift(); */
         /*  foodarray.shift(); */
-         
-         if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
-            updatefoodpositionone();
-            snakebody.push([food[1].a,food[1].b]);
-            score++;
-            scoreElement.innerText =`score:${score}`;
-            snakespeed++;
-            console.log("vishal");
-            if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
-            updatefoodpositiontwo();
-            snakebody.push([food[2].a,food[2].b]);
-            score++;
-            scoreElement.innerText =`score:${score}`;
-            snakespeed++;
-         /* foodarray.pop(); */
      }
-}
-      /* if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
-          updatefoodpositiontwo();
+         
+      if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+        //   updatefoodpositionone();
+          snakebody.push([food[1].a,food[1].b]);
+          score++;
+          scoreElement.innerText =`score:${score}`;
+          snakespeed++;
+      }
+      if(snakebody[0].x === food[2].b   &&  snakebody[0].y === food[2].a){
+        //   updatefoodpositiontwo();
           snakebody.push([food[2].a,food[2].b]);
           score++;
           scoreElement.innerText =`score:${score}`;
           snakespeed++;
-       /* foodarray.pop(); */
-   //} */
+            /* foodarray.pop(); */
+            //return;    
+    
+   }
 }
 
 /*      if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
@@ -258,7 +263,7 @@ const updatefoodpositiontwo = () =>{
          /* foodarray.pop(); */
          //return; 
      //}
- } 
+ 
     //trying to make things in sequence
 /* const initgame = () =>{
     if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
@@ -345,7 +350,7 @@ function drawsnake(gameboard){
 function getsnakehead(){
     return snakebody[0]
 }
-updatefoodposition();
+// updatefoodposition()
 /* let setIntervalId;
 setIntervalId=setInterval(initgame,100); */
 window.addEventListener("keydown", e=>{
@@ -413,14 +418,5 @@ right.addEventListener("click",() =>{
 left.addEventListener("click",() =>{
     inputDirection = {x:-1,y:0}
 })
-function snakeintersection(){
-    for(let i=0;i<snakebody.length;i++)
-    {
-        if(i!==0 && snakebody[0].x === snakebody[i].x && snakebody[0].y === snakebody[i].y)
-        {
-            alert("gameover");
-        }
+
          
-    }
-}
-//final line
