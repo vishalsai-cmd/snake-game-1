@@ -132,9 +132,9 @@ function drawfood(gameboard){
      foodelement1.style.gridColumnStart=food[1].b;
      foodelement2.style.gridRowStart=food[2].a;
      foodelement2.style.gridColumnStart=food[2].b;
-     foodelement.classList.add("food");
-     foodelement1.classList.add("food1");
-     foodelement2.classList.add("food2");
+     foodelement.classList.add("food1");
+     foodelement1.classList.add("food2");
+     foodelement2.classList.add("food3");
      gameboard.appendChild(foodelement);
      gameboard.appendChild(foodelement1);
      gameboard.appendChild(foodelement2);
@@ -171,59 +171,69 @@ function uncallfood()
 
 
 let colorarr=["yellow","blue","red"];
+let foodorder=0;
 
 
 const initgame = () =>{
     let seqarr=[foodelement,foodelement1,foodelement2];
-    let r=Math.floor(Math.random()*3);
+    /* let r=Math.floor(Math.random()*3); */
 
-    if(seqarr[r] == foodelement){
-     if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
-          updatefoodposition()
-         snakebody.push([food[0].a,food[0].b])   
-         score++;
-         farr.shift()
-         scoreElement.innerText =`score:${score}`
-         /* foodsound.play();  */
-         highscore = score >= highscore ? score: highscore;
-         localStorage.setItem("high-score",highscore);
-         highscoreElement.innerText=`High score:${highscore}`;
-         snakespeed++;
-         uncallfood();
-         colors.textContent=colorarr[r];
-         console.log(seqarr[r]);
-
-          /* foodarr.shift();  */
-        /*  foodarray.shift(); */
-     }
-    }
-
-      if(seqarr[r] == foodelement1){   
-      if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
-           updatefoodpositionone();
-          snakebody.push([food[1].a,food[1].b]);
-          score++;
-          scoreElement.innerText =`score:${score}`;
-          snakespeed++;
-          /* foodsound.play(); */
-          colors.textContent=colorarr[r];
-      }
-    }
-    if(seqarr[r] == foodelement2){
-      if(snakebody[0].x === food[2].b   &&  snakebody[0].y === food[2].a){
-          updatefoodpositiontwo();
-          snakebody.push([food[2].a,food[2].b]);
-          score++;
-          scoreElement.innerText =`score:${score}`;
-          snakespeed++;
-         /*  foodsound.play(); */
-            /* foodarray.pop(); */
+    /* if(seqarr[0] == foodelement){ */
+        if(snakebody[0].x === food[foodorder].b &&  snakebody[0].y=== food[foodorder].a){
+            /* updatefoodposition() */
+            /* gameboard.removeChild(foodelement); */
+            document.querySelector(`.food${foodorder+1 }`).style.backgroundColor = 'green';
+            snakebody.push([food[0].a,food[0].b])   
+            score++;
+            foodorder++;
+            /* farr.shift() */
+            scoreElement.innerText =`score:${score}`;
+            /* foodsound.play();  */
+            highscore = score >= highscore ? score: highscore;
+            localStorage.setItem("high-score",highscore);
+            highscoreElement.innerText=`High score:${highscore}`;
+            snakespeed++;
             colors.textContent=colorarr[r];
+            /* uncallfood(); */
+            seqarr.shift();
+            console.log(seqarr[r]);
+     }
+/*    /*  } */
+
+      /* if(seqarr[r] == foodelement1){  */  
+          /* if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+              /* updatefoodpositionone();  */
+              /* snakebody.push([food[1].a,food[1].b]);
+              foodelement1.style.display="none";
+              score++;
+              scoreElement.innerText =`score:${score}`;
+              snakespeed++;
+              colors.textContent=colorarr[r]; */ 
+          /* foodsound.play(); */
+      }
+    /* } */
+    /* if(seqarr[r] == foodelement2){ */
+        /* if(snakebody[0].x === food[2].b   &&  snakebody[0].y === food[2].a){
+            /* updatefoodpositiontwo();  */
+            /* snakebody.push([food[2].a,food[2].b]);
+            score++;
+            scoreElement.innerText =`score:${score}`;
+            snakespeed++;
+            colors.textContent=colorarr[r];
+            foodelement2.style.display='none';
+            seqarr.pop();
+            updatefoodposition();
+            updatefoodpositionone();
+            updatefoodpositiontwo();  */
+
+          /* foodsound.play(); */
+            /* foodarray.pop(); */
             //return;    
     
-   }
-}
- }
+   //} */
+//}
+
+ //}
 function updatesnake(){
     const inputDirection=getinputDirection();
     for(let i=snakebody.length-2;i>=0;i--){
