@@ -29,7 +29,6 @@ let sequence1=seq1.innerHTML=color1[number];
 let sequence2=seq2.innerHTML=color2[number];
 let sequence3=seq3.innerHTML=color3[number]; */
 let colors=document.querySelector(".colors");
-colors.innerHTML=sequencearr;
 
 let score=0;
 let snakebody=[
@@ -164,58 +163,6 @@ function createfood(){
     farr.push([fX,fY])
 }
 }
-/* //const initgame = () =>{
-
-
-//    for(let i=0;i<3;i++){
-
-//console.log(i);
-//        if(snakebody[0].x===food[i].a && snakebody[0].y==food[i].b)
-//        {
-//        console.log(food[i].a);
-    
-    if(snakebody[0].x === food[foodtrack].b &&  snakebody[0].y=== food[foodtrack].a){
-        updatefoodposition()
-        snakebody.push([food[0].a,food[0].b])   
-        score++;
-        foodtrack++;
-        scoreElement.innerText =`score:${score}`
-         foodsound.play(); 
-        highscore = score >= highscore ? score: highscore;
-        localStorage.setItem("high-score",highscore);
-        highscoreElement.innerText=`High score:${highscore}`;
-        snakespeed++;
-//        foodarray.shift();
-        return;
-    }
-//    else{
-//        alert("You lost");
-//    }
-    
-//}
-
-//} 
-
-//}
-
-     if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
-         /* updatefoodpositionone(); */
-        /*  snakebody.push([food[1].a,food[1].b]);
-         score++;
-         scoreElement.innerText =`score:${score}`;
-         snakespeed++;
-         return; */
-     //}
-     /* if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
-         updatefoodpositiontwo();
-         snakebody.push([food[2].a,food[2].b]);
-         score++;
-         scoreElement.innerText =`score:${score}`;
-         snakespeed++; */
-         /* foodarray.pop(); */
-       //  return; 
-     //} */
-/* colorsequence=["yellow","blue","red"]; */
 function uncallfood()
 {
     foodelement.classList.add("greenfood");
@@ -223,119 +170,60 @@ function uncallfood()
 }
 
 
+let colorarr=["yellow","blue","red"];
 
- const initgame = () =>{
+
+const initgame = () =>{
     let seqarr=[foodelement,foodelement1,foodelement2];
     let r=Math.floor(Math.random()*3);
-    if(seqarr[r] == seqarr[0]){
+
+    if(seqarr[r] == foodelement){
      if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
           updatefoodposition()
          snakebody.push([food[0].a,food[0].b])   
          score++;
          farr.shift()
          scoreElement.innerText =`score:${score}`
-         /* foodsound.play(); */
+         /* foodsound.play();  */
          highscore = score >= highscore ? score: highscore;
          localStorage.setItem("high-score",highscore);
          highscoreElement.innerText=`High score:${highscore}`;
          snakespeed++;
          uncallfood();
+         colors.textContent=colorarr[r];
          console.log(seqarr[r]);
 
-          foodarr.shift(); 
+          /* foodarr.shift();  */
         /*  foodarray.shift(); */
      }
     }
 
-      if(seqarr[r] == seqarr[1]){   
+      if(seqarr[r] == foodelement1){   
       if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
            updatefoodpositionone();
           snakebody.push([food[1].a,food[1].b]);
           score++;
           scoreElement.innerText =`score:${score}`;
           snakespeed++;
+          /* foodsound.play(); */
+          colors.textContent=colorarr[r];
       }
     }
-    if(seqarr[r] == seqarr[2]){
+    if(seqarr[r] == foodelement2){
       if(snakebody[0].x === food[2].b   &&  snakebody[0].y === food[2].a){
           updatefoodpositiontwo();
           snakebody.push([food[2].a,food[2].b]);
           score++;
           scoreElement.innerText =`score:${score}`;
           snakespeed++;
+         /*  foodsound.play(); */
             /* foodarray.pop(); */
+            colors.textContent=colorarr[r];
             //return;    
     
    }
 }
  }
-
-/*      if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
-          updatefoodpositionone();
-          snakebody.push([food[1].a,food[1].b]);
-          score++;
-          scoreElement.innerText =`score:${score}`;
-          snakespeed++;
-         return;
-     }
-     if(snakebody[0].x === food[2].b  &&  snakebody[0].y === food[2].a){
-         updatefoodpositiontwo();
-         snakebody.push([food[2].a,food[2].b]);
-         score++;
-         scoreElement.innerText =`score:${score}`;
-         snakespeed++;
-         /* foodarray.pop(); */
-         //return; 
-     //}
- 
-    //trying to make things in sequence
-/* const initgame = () =>{
-    if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
-        updatefoodposition()
-        snakebody.push([food[0].a,food[0].b])   
-        score++;
-        scoreElement.innerText =`score:${score}`
-        foodsound.play();
-        highscore = score >= highscore ? score: highscore;
-        localStorage.setItem("high-score",highscore);
-        highscoreElement.innerText=`High score:${highscore}`;
-        snakespeed=snakespeed+2;
-
-}
-const redfood = () =>{
-    if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
-        updatefoodposition();
-        snakebody.push([food[1].a,food[1].b]);
-        score++;
-        scoreElement.innerText =`score:${score}`;
-        snakespeed=snakespeed+2;
-    }
-
-    
-}  */
-    /* for(let i=0;i<snakebody.length;i++)
-    {
-        if(i!==0 && snakebody[0][1] === snakebody[i][1] && snakebody[0][0] === snakebody[i][0])
-        {
-            alert("gameover");
-        }
-         
-    } */
-
-
-
-/* console.log(snakebody[0].x);
-console.log(snakebody[0].y );
-console.log(food[2].a);
-console.log(food[2].b); */
-
-/* snakebody[0]=[snakex,snakey];
-console.log(snakebody[0]); */
-/* if(snakebody[0].x === food[0].a  &&  snakebody[0].y === food[0].b){
-    updatefoodposition();
-    snakebody.push([food[0].a,food[0].b]);
-    console.log("vishal"); 
-} */
 function updatesnake(){
     const inputDirection=getinputDirection();
     for(let i=snakebody.length-2;i>=0;i--){
@@ -410,22 +298,7 @@ function getinputDirection(){
     lastinputDirection=inputDirection;
     return inputDirection;
 }
-/* function up(){
-    inputDirection = {x:0,y:-1}
-}
-up();
-function down(){
-    inputDirection = {x:0,y:-1}
-}
-down();
-function right(){
-    inputDirection = {x:0,y:-1}
-}
-right();
-function left(){
-    inputDirection = {x:0,y:-1}
-}
-left(); */
+
 const up=document.querySelector(".up");
 const down=document.querySelector(".down");
 const right=document.querySelector(".right");
