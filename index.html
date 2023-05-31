@@ -11,11 +11,13 @@
             <script src="script.js" defer type="module"></script>
         </head>
         <body>
+            <input type="text" id="vargrid" placeholder="gridsize">
+            <button id="submit" onclick="vargrid=document.getElementById('vargrid').value">submit</button>
             <div class="container flex-col">
                 <div class="top-nav">
                     <div class="flex-row">
                         <div id="countdown"></div>
-                        <div class="colors"> </div>
+                        <div class="colors">color-sequence:yellow,blue,red</div>
 
                     </div>
                 </div>

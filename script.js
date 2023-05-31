@@ -18,16 +18,9 @@ let highscore=localStorage.getItem("high-score") || 0;
 highscoreElement.innerText=`High score:${highscore}`;
 var foodsound=new Audio("snake.mp3");
 let container=document.querySelector(".container");
-/* let seq1=document.querySelector(".seq1");
-let seq2=document.querySelector(".seq2");
-let seq3=document.querySelector(".seq3");
-let color1=["red","yellow","blue"];
-let color2=["yellow","blue","red"];
-let color3=["blue","red","yellow"];
-let number=Math.floor(Math.random()*3);
-let sequence1=seq1.innerHTML=color1[number];
-let sequence2=seq2.innerHTML=color2[number];
-let sequence3=seq3.innerHTML=color3[number]; */
+let vargrid;
+document.getElementById("game").style['grid-template-rows']=`repeat(${vargrid},1fr);`
+document.getElementById("game").style['grid-template-columns']=`repeat(${vargrid},1fr);`
 let colors=document.querySelector(".colors");
 
 let score=0;
@@ -38,7 +31,7 @@ let snakebody=[
 
 
 ]; 
-/* let snakebody=[]; */
+
 let food=[
     {a:10,b:20},
     {a:5,b:10},
@@ -66,16 +59,13 @@ let animation1=window.requestAnimationFrame(main)
 
  function update(){
     updatesnake();
-    /* updateFood(); */
     checkDeath();
-    /* updatefoodposition(); */
-    /* initgame(); */
+
 
 } 
 function draw(){
     gameboard.innerHTML='';
     drawsnake(gameboard);
-    /* drawFood(gameboard); */
     drawfood(gameboard);
     console.log('inside draw')
 
@@ -140,7 +130,6 @@ function drawfood(gameboard){
      gameboard.appendChild(foodelement2);
 } 
 
-// let foodtrack=1;
  const updatefoodposition = () =>{
      food[0].a=Math.floor(Math.random()*40);
      food[0].b=Math.floor(Math.random()*40);
@@ -156,22 +145,19 @@ function drawfood(gameboard){
      food[2].b=Math.floor(Math.random()*40);
 
  }
-function createfood(){
+/* function createfood(){
     for (let i=0;i<3;i++){
     let fX = Math.floor(Math.random()*40);
     let fY = Math.floor(Math.random()*40);
     farr.push([fX,fY])
 }
-}
-function uncallfood()
-{
-    foodelement.classList.add("greenfood");
+} */
 
-}
 
 
 let colorarr=["yellow","blue","red"];
-let foodorder=0;
+let currentFood = [];
+let foodIndex=0;
 
 
 const initgame = () =>{
@@ -179,12 +165,27 @@ const initgame = () =>{
     /* let r=Math.floor(Math.random()*3); */
 
     /* if(seqarr[0] == foodelement){ */
-        if(snakebody[0].x === food[foodorder].b &&  snakebody[0].y=== food[foodorder].a){
-            /* updatefoodposition() */
+        if(snakebody[0].x === food[0].b &&  snakebody[0].y=== food[0].a){
+             updatefoodposition() 
             /* gameboard.removeChild(foodelement); */
-            document.querySelector(`.food${foodorder+1 }`).style.backgroundColor = 'green';
-            snakebody.push([food[0].a,food[0].b])   
-            score++;
+            /* document.querySelector(`.food${foodorder+1 }`).style.backgroundColor = 'green'; */
+            snakebody.push([food[0].a,food[0].b])
+            currentFood.push(foodelement);
+            if(currentFood.size()!=0){
+                if(currentFood[currentFood.length-1]==colorarr[i]){
+                    i++;
+                    if(i>2){
+                        score++;
+                        currentFood.splice(0, currentFood.length);
+                        i=0;
+                    }
+                }
+                else{
+                    currentFood.splice(0, currentFood.length);
+                    i=0;
+                }
+            }   
+            // score++;
             foodorder++;
             /* farr.shift() */
             scoreElement.innerText =`score:${score}`;
@@ -193,63 +194,83 @@ const initgame = () =>{
             localStorage.setItem("high-score",highscore);
             highscoreElement.innerText=`High score:${highscore}`;
             snakespeed++;
-            colors.textContent=colorarr[r];
-            /* uncallfood(); */
+            /* colors.textContent=colorarr[r]; */
             seqarr.shift();
-            console.log(seqarr[r]);
      }
 /*    /*  } */
 
-      /* if(seqarr[r] == foodelement1){  */  
-          /* if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
-              /* updatefoodpositionone();  */
-              /* snakebody.push([food[1].a,food[1].b]);
+      /*if(seqarr[r] == foodelement1){  */  
+           if(snakebody[0].x === food[1].b  &&  snakebody[0].y === food[1].a){
+              updatefoodpositionone(); 
+               snakebody.push([food[1].a,food[1].b]);
               foodelement1.style.display="none";
-              score++;
+              currentFood.push(foodelement1);
+              if(currentFood.size()!=0){
+                if(currentFood[currentFood.length-1]==colorarr[i]){
+                    i++;
+                    if(i>2){
+                        score++;
+                        currentFood.splice(0, currentFood.length);
+                        i=0;
+                    }
+                }
+                else{
+                    currentFood.splice(0, currentFood.length);
+                    i=0;
+                }
+            } 
+            //   score++;
               scoreElement.innerText =`score:${score}`;
               snakespeed++;
-              colors.textContent=colorarr[r]; */ 
-          /* foodsound.play(); */
+              /* colors.textContent=colorarr[r];  */
+           foodsound.play(); 
       }
     /* } */
     /* if(seqarr[r] == foodelement2){ */
-        /* if(snakebody[0].x === food[2].b   &&  snakebody[0].y === food[2].a){
-            /* updatefoodpositiontwo();  */
-            /* snakebody.push([food[2].a,food[2].b]);
+         if(snakebody[0].x === food[2].b   &&  snakebody[0].y === food[2].a){
+             updatefoodpositiontwo(); 
+             snakebody.push([food[2].a,food[2].b]);
             score++;
             scoreElement.innerText =`score:${score}`;
             snakespeed++;
-            colors.textContent=colorarr[r];
+            /* colors.textContent=colorarr[r]; */
             foodelement2.style.display='none';
+            currentFood.push(foodelement2);
+            if(currentFood.size()!=0){
+                if(currentFood[currentFood.length-1]==colorarr[i]){
+                    i++;
+                    if(i>2){
+                        score++;
+                        currentFood.splice(0, currentFood.length);
+                        i=0;
+                    }
+                }
+                else{
+                    currentFood.splice(0, currentFood.length);
+                    i=0;
+                }
+            } 
             seqarr.pop();
             updatefoodposition();
             updatefoodpositionone();
-            updatefoodpositiontwo();  */
+            updatefoodpositiontwo(); 
 
-          /* foodsound.play(); */
+           foodsound.play(); 
             /* foodarray.pop(); */
             //return;    
     
-   //} */
-//}
-
- //}
+   } 
+}
 function updatesnake(){
     const inputDirection=getinputDirection();
     for(let i=snakebody.length-2;i>=0;i--){
         snakebody[i+1]={...snakebody[i]}
     } 
-    /* for (let i = snakebody.length - 1; i > 0; i--) {
-        snakebody[i] = snakebody[i - 1];
-    } */
     snakebody[0].x+=inputDirection.x;
     snakebody[0].y+=inputDirection.y; 
-    /* snakex+=inputDirection.x;
-    snakey+=inputDirection.y; */
+    
     initgame();
-    /* snakeintersection(); */
-   
-
+    
 }
 function drawsnake(gameboard){
     snakebody.forEach(segment =>  {
@@ -324,6 +345,7 @@ right.addEventListener("click",() =>{
 })
 left.addEventListener("click",() =>{
     inputDirection = {x:-1,y:0}
-})
+})  
+
 
          
